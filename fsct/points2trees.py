@@ -301,7 +301,6 @@ if __name__ == '__main__':
     trees.loc[:, 'cnt'] = trees.groupby('t_clstr').t_clstr.transform('count')
     trees = trees.loc[trees.cnt > params.min_points_per_tree]
     in_tile_stem_nodes = trees.loc[trees.t_clstr.isin(in_tile_stem_nodes)].t_clstr.unique()
-    print("in_tile_stem_nodes columns:", in_tile_stem_nodes.columns.values)
 
     # write out all trees
     params.base_I, I = {}, 0
@@ -409,7 +408,6 @@ if __name__ == '__main__':
         lvs = pd.merge(lvs, leaf_paths[['VX', 't_clstr', 'distance']], on='VX', how='left')
 
         # and save
-        in_tile_stem_nodes[['x', 'y']] -= params.global_shift  # Shift back from UTM to local
         
         for lv in tqdm(in_tile_stem_nodes):
 
