@@ -297,7 +297,7 @@ if __name__ == '__main__':
     trees = pd.merge(stem_pc, 
                      stems[['clstr', 't_clstr', 'distance', 'red', 'green', 'blue']], 
                      on='clstr')
-    trees['x', 'y'] += params.global_shift  # Shift back from local to UTM
+    trees[['x', 'y']] += params.global_shift  # Shift back from local to UTM
     trees.loc[:, 'cnt'] = trees.groupby('t_clstr').t_clstr.transform('count')
     trees = trees.loc[trees.cnt > params.min_points_per_tree]
     in_tile_stem_nodes = trees.loc[trees.t_clstr.isin(in_tile_stem_nodes)].t_clstr.unique()
@@ -409,7 +409,7 @@ if __name__ == '__main__':
         lvs = pd.merge(lvs, leaf_paths[['VX', 't_clstr', 'distance']], on='VX', how='left')
 
         # and save
-        in_tile_stem_nodes['x', 'y'] -= params.global_shift  # Shift back from UTM to local
+        in_tile_stem_nodes[['x', 'y']] -= params.global_shift  # Shift back from UTM to local
         
         for lv in tqdm(in_tile_stem_nodes):
 
@@ -420,7 +420,7 @@ if __name__ == '__main__':
             stem = ply_io.read_ply(os.path.join(wood_fn))
             stem.loc[:, 'wood'] = 1
 
-            stem['x', 'y'] -= params.global_shift  # Shift from UTM to local
+            stem[['x', 'y']] -= params.global_shift  # Shift from UTM to local
             
             l2a = lvs.loc[lvs.t_clstr == lv]
             if len(l2a) > 0:
@@ -433,7 +433,7 @@ if __name__ == '__main__':
                 stem = stem.append(l2a[['x', 'y', 'z', 'label', 'red', 'green', 'blue', 't_clstr', 'wood', 'distance']])
 
             stem = stem.loc[~stem.duplicated()]
-            stem['x', 'y'] += params.global_shift  # Reset from local coords to UTM
+            stem[['x', 'y']] += params.global_shift  # Reset from local coords to UTM
             ply_io.write_ply(wood_fn.replace('leafoff', 'leafon'), 
                              stem[['x', 'y', 'z', 'red', 'green', 'blue', 'label', 't_clstr', 'wood', 'distance']])
             if params.verbose: print(f"leaf on saved to: {wood_fn.replace('leafoff', 'leafon')}") 
