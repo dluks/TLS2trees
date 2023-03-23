@@ -1,13 +1,15 @@
-import os
-import time
-import threading
 import itertools
+import os
+import threading
+import time
+
 import numpy as np
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 from tqdm import tqdm
 
 from fsct.tools import *
+
 
 def save_pts(params, I, bx, by, bz):
 
@@ -31,7 +33,7 @@ def Preprocessing(params):
     params.basename = os.path.splitext(params.filename)[0]
     params.tile = params.filename.split('.')[0]
     params.input_format = os.path.splitext(params.point_cloud)[1]
-    if isinstance(params.tile, str) and len(params.tile) == 3: params.tile = int(params.tile)
+    if not isinstance(params.tile, int) and params.tile.isdigit(): params.tile = int(params.tile)
 
     # create directory structure
     params = make_folder_structure(params)
