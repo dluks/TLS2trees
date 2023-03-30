@@ -150,7 +150,7 @@ if __name__ == '__main__':
                      total=len(buffer_tiles),
                      desc='read in neighbouring tiles', 
                      disable=False if params.verbose else True):
-
+        print("Reading buffer tile: ", t)
         try:
             b_tile = glob.glob(os.path.join(params.dir, f'{t}*.ply'))[0]
             tmp = ply_io.read_ply(b_tile)
@@ -166,7 +166,7 @@ if __name__ == '__main__':
             tmp.loc[:, 'fn'] = t
             params.pc = params.pc.append(tmp, ignore_index=True)
         except:
-            path = os.path.join(params.dir, f'{t:03}*.ply')
+            path = os.path.join(params.dir, f'{t}*.ply')
             if params.ignore_missing_tiles:
                 print(f'tile {path} not available')
             else:
@@ -317,10 +317,10 @@ if __name__ == '__main__':
             d_dir = f'{(dbh_cylinder.loc[b].radius * 2 // .1) / 10:.1f}'
             if not os.path.isdir(os.path.join(params.odir, d_dir)):
                 os.makedirs(os.path.join(params.odir, d_dir))
-            ply_io.write_ply(os.path.join(params.odir, d_dir, f'{params.n:03}_T{I}.leafoff.ply'), 
+            ply_io.write_ply(os.path.join(params.odir, d_dir, f'{params.n}_T{I}.leafoff.ply'), 
                              trees.loc[trees.t_clstr == b])  
         else:
-            ply_io.write_ply(os.path.join(params.odir, f'{params.n:03}_T{I}.leafoff.ply'), 
+            ply_io.write_ply(os.path.join(params.odir, f'{params.n}_T{I}.leafoff.ply'), 
                              trees.loc[trees.t_clstr == b])
         params.base_I[b] = I
         I += 1  
@@ -414,7 +414,7 @@ if __name__ == '__main__':
 
             I = params.base_I[lv]
 
-            wood_fn = glob.glob(os.path.join(params.odir, '*', f'{params.n:03}_T{I}.leafoff.ply'))[0]
+            wood_fn = glob.glob(os.path.join(params.odir, '*', f'{params.n}_T{I}.leafoff.ply'))[0]
 
             stem = ply_io.read_ply(os.path.join(wood_fn))
             stem.loc[:, 'wood'] = 1
