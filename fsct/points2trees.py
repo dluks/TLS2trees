@@ -150,7 +150,6 @@ if __name__ == '__main__':
                      total=len(buffer_tiles),
                      desc='read in neighbouring tiles', 
                      disable=False if params.verbose else True):
-        print("Reading buffer tile: ", t)
         try:
             b_tile = glob.glob(os.path.join(params.dir, f'{t}*.ply'))[0]
             tmp = ply_io.read_ply(b_tile)
