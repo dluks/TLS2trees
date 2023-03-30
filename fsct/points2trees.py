@@ -120,7 +120,8 @@ if __name__ == '__main__':
     xyz = ['x', 'y', 'z'] # shorthand
 
     params.dir, params.fn = os.path.split(params.tile)
-    params.n = int(params.fn.split('.')[0])
+    params.n = params.fn.split('.')[0]
+    params.n = int(params.n) if params.n.isdigit() else params.n
 
     params.pc = ply_io.read_ply(params.tile)
     params.pc.loc[:, 'buffer'] = False
