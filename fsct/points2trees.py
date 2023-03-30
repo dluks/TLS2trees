@@ -152,7 +152,7 @@ if __name__ == '__main__':
                      disable=False if params.verbose else True):
 
         try:
-            b_tile = glob.glob(os.path.join(params.dir, f'{t:03}*.ply'))[0]
+            b_tile = glob.glob(os.path.join(params.dir, f'{t}*.ply'))[0]
             tmp = ply_io.read_ply(b_tile)
             
             # Apply global shift to tile
